@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_risk_engine.dir/tests/test_risk_engine.c.o -o test_risk_engine  libfinovra_core.a -lm 

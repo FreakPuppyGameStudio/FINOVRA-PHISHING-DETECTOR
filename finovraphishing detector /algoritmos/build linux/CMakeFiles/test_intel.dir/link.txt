@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_intel.dir/tests/test_intel.c.o -o test_intel  libfinovra_core.a -lm 

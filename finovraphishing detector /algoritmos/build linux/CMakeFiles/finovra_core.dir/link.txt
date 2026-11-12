@@ -1,0 +1,2 @@
+/usr/bin/ar qc libfinovra_core.a CMakeFiles/finovra_core.dir/src/url_analyzer.c.o CMakeFiles/finovra_core.dir/src/email_analyzer.c.o CMakeFiles/finovra_core.dir/src/risk_engine.c.o CMakeFiles/finovra_core.dir/src/campaign_detector.c.o CMakeFiles/finovra_core.dir/src/intel.c.o CMakeFiles/finovra_core.dir/src/domain_heuristics.c.o
+/usr/bin/ranlib libfinovra_core.a

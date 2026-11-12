@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_campaign_detector.dir/tests/test_campaign_detector.c.o -o test_campaign_detector  libfinovra_core.a -lm 

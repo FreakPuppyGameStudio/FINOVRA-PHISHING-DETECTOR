@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_url_analyzer.dir/tests/test_url_analyzer.c.o -o test_url_analyzer  libfinovra_core.a -lm 

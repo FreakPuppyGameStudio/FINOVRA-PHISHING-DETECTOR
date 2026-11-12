@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_domain_heuristics.dir/tests/test_domain_heuristics.c.o -o test_domain_heuristics  libfinovra_core.a -lm 

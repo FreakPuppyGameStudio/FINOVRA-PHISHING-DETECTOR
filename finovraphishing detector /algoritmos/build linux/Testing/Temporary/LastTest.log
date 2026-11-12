@@ -1,0 +1,329 @@
+Start testing: Nov 11 19:23 CST
+----------------------------------------------------------
+1/7 Testing: url_analyzer
+1/7 Test: url_analyzer
+Command: "/home/santi/Documentos/algoritmos/build/test_url_analyzer"
+Directory: /home/santi/Documentos/algoritmos/build
+"url_analyzer" start time: Nov 11 19:23 CST
+Output:
+----------------------------------------------------------
+--- Niveles de riesgo ---
+ok:   https://www.google.com/search              -> Bajo riesgo
+ok:   https://paypal.com/                        -> Bajo riesgo
+ok:   https://www.google.co.uk/                  -> Bajo riesgo
+ok:   https://amazonas.com.mx/                   -> Bajo riesgo
+ok:   https://a.b.c.d.example.com/               -> Bajo riesgo
+ok:   https://secure-login-update.example.com/   -> Bajo riesgo
+ok:   http://192.168.1.10/login                  -> Sospechosa
+ok:   https://bit.ly/abc                         -> Sospechosa
+ok:   https://example.com/%20%41                 -> Sospechosa
+ok:   https://paypa1.com/login                   -> Sospechosa
+ok:   https://google-store.com/                  -> Sospechosa
+ok:   https://a.b.c.my-site.com/                 -> Sospechosa
+ok:   http://192.168.1.10:8080/login             -> Alto riesgo
+ok:   https://banco.com@sitio.xyz/login          -> Alto riesgo
+ok:   https://paypal.com.secure.evil.xyz/        -> Alto riesgo
+ok:   https://xn--pypal-4ve.com/                 -> Alto riesgo
+
+--- Indicadores esperados ---
+ok:   https://paypa1.com/login                   incluye marca_suplantada
+ok:   https://a.b.c.d.example.com/               incluye subdominios_excesivos
+ok:   https://secure-login-update.example.com/   incluye guiones_en_dominio
+ok:   https://bit.ly/abc                         incluye acortador_url
+ok:   http://192.168.1.10/login                  incluye ip_en_lugar_de_dominio
+
+--- Entradas inválidas ---
+ok:   https://                                   rechazada
+ok:                                              rechazada
+ok:   https://host:abc/                          rechazada
+
+--- Distancia de Levenshtein ---
+ok:   levenshtein(paypa1, paypal) = 1
+ok:   levenshtein(kitten, sitting) = 3
+ok:   levenshtein(vacía, abc) = 3
+
+Todas las pruebas pasaron.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"url_analyzer" end time: Nov 11 19:23 CST
+"url_analyzer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/7 Testing: email_analyzer
+2/7 Test: email_analyzer
+Command: "/home/santi/Documentos/algoritmos/build/test_email_analyzer"
+Directory: /home/santi/Documentos/algoritmos/build
+"email_analyzer" start time: Nov 11 19:23 CST
+Output:
+----------------------------------------------------------
+--- Parseo ---
+ok:   NULL se rechaza
+ok:   cabecera plegada: asunto unido
+ok:   remitente leído
+ok:   Authentication-Results detectada
+ok:   quoted-printable decodificado (=C3=A1 -> á)
+ok:   sin adjuntos en correo de texto
+ok:   multipart: un adjunto encontrado
+ok:   adjunto: nombre leído desde filename
+ok:   multipart: parte de texto leída
+
+--- Niveles de riesgo ---
+ok:   correo limpio                      -> Bajo riesgo
+ok:   phishing evidente                  -> Alto riesgo
+ok:   adjunto con doble extensión       -> Alto riesgo
+ok:   adjunto .exe simple                -> Sospechosa
+
+--- Indicadores esperados ---
+ok:   phishing                           incluye marca_en_nombre_remitente
+ok:   phishing                           incluye dmarc_fallido
+ok:   phishing                           incluye lenguaje_urgente
+ok:   phishing                           incluye solicita_credenciales
+ok:   phishing                           incluye enlace_sospechoso
+ok:   phishing                           incluye reply_to_distinto
+ok:   doble extensión                   incluye adjunto_doble_extension
+
+Todas las pruebas pasaron.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"email_analyzer" end time: Nov 11 19:23 CST
+"email_analyzer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/7 Testing: risk_engine
+3/7 Test: risk_engine
+Command: "/home/santi/Documentos/algoritmos/build/test_risk_engine"
+Directory: /home/santi/Documentos/algoritmos/build
+"risk_engine" start time: Nov 11 19:23 CST
+Output:
+----------------------------------------------------------
+--- Regla de agregación ---
+ok:   sin hallazgos                          -> Bajo riesgo
+ok:   un débil                              -> Bajo riesgo
+ok:   dos débiles                           -> Sospechosa
+ok:   un sospechoso y un débil              -> Sospechosa
+ok:   un sospechoso                          -> Sospechosa
+ok:   dos sospechosos                        -> Alto riesgo
+ok:   tres sospechosos                       -> Alto riesgo
+ok:   un alto                                -> Alto riesgo
+
+--- Conteos ---
+ok:   conteo por severidad correcto
+
+--- Explicación ---
+ok:   risk_explain devuelve 0
+ok:   resumen indica el nivel final
+ok:   resumen cita el hallazgo más fuerte
+ok:   buffer nulo se rechaza
+ok:   sin hallazgos también explica
+ok:   sin hallazgos el texto lo dice
+
+Todas las pruebas pasaron.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"risk_engine" end time: Nov 11 19:23 CST
+"risk_engine" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/7 Testing: campaign_detector
+4/7 Test: campaign_detector
+Command: "/home/santi/Documentos/algoritmos/build/test_campaign_detector"
+Directory: /home/santi/Documentos/algoritmos/build
+"campaign_detector" start time: Nov 11 19:23 CST
+Output:
+----------------------------------------------------------
+--- Parseo de entrada ---
+ok:   6 correos parseados
+
+--- Correlación ---
+ok:   campaign_detect devuelve 0
+ok:   dos campañas detectadas
+ok:   correos 0 y 1 forman una campaña (enlace + asunto)
+ok:   correos 4 y 5 forman una campaña (mismo remitente + texto)
+ok:   campaña 0-1 incluye enlace idéntico
+ok:   campaña 0-1 incluye mismo asunto
+ok:   resumen cuenta los correos
+      resumen: Campaña de 2 correos. Comparten: enlace idéntico, mismo asunto.
+ok:   campaña 4-5 incluye texto parecido
+ok:   campaña 4-5 incluye mismo remitente
+      resumen: Campaña de 2 correos. Comparten: mismo remitente, texto parecido.
+ok:   correo normal (2) no se agrupa
+ok:   asunto compartido solo (3) no basta para agrupar
+
+--- Casos límite ---
+ok:   sin correos: cero campañas
+ok:   puntero nulo con correos se rechaza
+ok:   un solo correo: cero campañas
+ok:   describe las señales en español
+ok:   sin señales dice nada en común
+
+Todas las pruebas pasaron.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"campaign_detector" end time: Nov 11 19:23 CST
+"campaign_detector" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/7 Testing: intel
+5/7 Test: intel
+Command: "/home/santi/Documentos/algoritmos/build/test_intel"
+Directory: /home/santi/Documentos/algoritmos/build
+"intel" start time: Nov 11 19:23 CST
+Output:
+----------------------------------------------------------
+--- Alta manual ---
+ok:   lista se crea
+ok:   dominio con mayúsculas se acepta
+ok:   línea vacía se rechaza
+ok:   URL completa se rechaza
+ok:   solo se guardó un dominio válido
+
+--- Coincidencia de hosts ---
+ok:   coincide el dominio exacto
+ok:   coincide un subdominio
+ok:   coincide un subdominio profundo
+ok:   no coincide un dominio que solo termina igual
+ok:   no coincide si el dominio sigue
+ok:   host vacío no coincide
+
+--- Integración con el reporte ---
+ok:   URL de prueba se analiza
+ok:   sin lista, la URL queda en bajo riesgo
+ok:   la lista coincide
+ok:   la coincidencia sube el nivel a alto riesgo
+ok:   el hallazgo de la lista aparece con su nombre
+ok:   URL limpia se analiza
+ok:   URL limpia no coincide
+ok:   URL limpia sigue en bajo riesgo
+
+--- Carga desde archivo ---
+ok:   segunda lista se crea
+ok:   archivo se lee
+ok:   se cargan dos dominios (comentarios y líneas vacías se ignoran)
+ok:   dominio del archivo con comentario al final coincide
+ok:   archivo inexistente se reporta como error
+
+--- Listas grandes sin cortes ---
+ok:   se aceptan 60000 dominios (más que el antiguo límite de 50000)
+ok:   el tamaño refleja todos los dominios
+ok:   el último dominio agregado sigue coincidiendo
+
+Todas las pruebas pasaron.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"intel" end time: Nov 11 19:23 CST
+"intel" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/7 Testing: domain_heuristics
+6/7 Test: domain_heuristics
+Command: "/home/santi/Documentos/algoritmos/build/test_domain_heuristics"
+Directory: /home/santi/Documentos/algoritmos/build
+"domain_heuristics" start time: Nov 11 19:23 CST
+Output:
+----------------------------------------------------------
+--- Nombres con apariencia aleatoria ---
+ok:   dominio aleatorio se analiza
+ok:   nombre aleatorio con dígitos se marca
+ok:   un nombre aleatorio con dígitos no queda en bajo riesgo
+
+--- Combinaciones de características ---
+ok:   dominio de acceso se analiza
+ok:   palabra de acceso en el nombre se marca
+ok:   extensión barata se marca
+ok:   nombre muy largo se marca
+ok:   dos características débiles dan sospechosa
+
+--- Sin falsos positivos en dominios normales ---
+ok:   wikipedia se analiza
+ok:   wikipedia no recibe ninguna característica
+ok:   mercadolibre se analiza
+ok:   marca conocida no se considera aleatoria
+ok:   google.co.uk se analiza
+ok:   google.co.uk sigue en bajo riesgo
+ok:   subdominios profundos se analizan
+ok:   palabras en subdominios no cuentan (solo el nombre principal)
+ok:   IP se analiza
+ok:   las IP no reciben características de nombre
+
+Todas las pruebas pasaron.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"domain_heuristics" end time: Nov 11 19:23 CST
+"domain_heuristics" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/7 Testing: database
+7/7 Test: database
+Command: "/home/santi/Documentos/algoritmos/build/test_database"
+Directory: /home/santi/Documentos/algoritmos/build
+"database" start time: Nov 11 19:23 CST
+Output:
+----------------------------------------------------------
+--- Apertura ---
+ok:   ruta nula se rechaza
+ok:   base en memoria se abre
+ok:   estadísticas en base vacía
+ok:   base vacía: todos los conteos en cero
+
+--- URLs ---
+ok:   guarda URL sospechosa
+ok:   devuelve el id guardado
+ok:   guarda URL de alto riesgo
+ok:   URL nula se rechaza
+ok:   estadísticas: 2 URLs, 1 de alto riesgo
+
+--- Correos ---
+ok:   correo A se parsea
+ok:   correo B se parsea
+ok:   guarda correo A con su riesgo
+ok:   devuelve el id del correo A
+ok:   guarda correo B
+ok:   resumen nulo se rechaza
+ok:   estadísticas: 2 correos
+ok:   estadísticas: 3 enlaces guardados (2 de A, 1 de B)
+ok:   alto riesgo: 1 URL + 1 correo
+
+--- Campañas ---
+ok:   guarda campaña con dos correos
+ok:   estadísticas: 1 campaña
+ok:   id de correo inexistente se rechaza por llave foránea
+ok:   tras el error no queda campaña a medias (rollback)
+ok:   índice fuera de rango se rechaza
+
+--- Desglose por nivel ---
+ok:   desglose se calcula
+ok:   URLs: 1 sospechosa, 1 alta, 0 bajas
+ok:   correos: 1 alto, 1 sospechoso, 0 bajos
+
+--- Historial reciente ---
+ok:   historial se genera
+ok:   historial incluye la URL guardada
+ok:   historial incluye los correos
+
+--- Borrado del historial ---
+ok:   historial se borra
+ok:   tras borrar, todos los conteos quedan en cero
+ok:   borrar un historial ya vacío no falla
+
+Todas las pruebas pasaron.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"database" end time: Nov 11 19:23 CST
+"database" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 11 19:23 CST

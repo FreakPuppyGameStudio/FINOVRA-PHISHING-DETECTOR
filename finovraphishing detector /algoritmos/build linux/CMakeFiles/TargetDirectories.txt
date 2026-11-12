@@ -1,0 +1,13 @@
+/home/santi/Documentos/algoritmos/build/CMakeFiles/finovra_core.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/finovra_db.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/finovra-phishing-detector.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test_url_analyzer.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test_email_analyzer.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test_risk_engine.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test_campaign_detector.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test_intel.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test_domain_heuristics.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test_database.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/test.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/edit_cache.dir
+/home/santi/Documentos/algoritmos/build/CMakeFiles/rebuild_cache.dir

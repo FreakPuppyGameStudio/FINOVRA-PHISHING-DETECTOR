@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_email_analyzer.dir/tests/test_email_analyzer.c.o -o test_email_analyzer  libfinovra_core.a -lm 

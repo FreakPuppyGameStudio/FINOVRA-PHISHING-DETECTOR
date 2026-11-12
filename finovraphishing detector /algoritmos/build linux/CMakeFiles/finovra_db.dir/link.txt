@@ -1,0 +1,2 @@
+/usr/bin/ar qc libfinovra_db.a CMakeFiles/finovra_db.dir/src/database.c.o
+/usr/bin/ranlib libfinovra_db.a

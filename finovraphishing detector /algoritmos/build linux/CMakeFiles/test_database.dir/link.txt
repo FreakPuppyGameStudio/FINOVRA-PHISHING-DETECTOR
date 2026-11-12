@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/test_database.dir/tests/test_database.c.o -o test_database  libfinovra_db.a libfinovra_core.a -lm /usr/lib/x86_64-linux-gnu/libsqlite3.so 

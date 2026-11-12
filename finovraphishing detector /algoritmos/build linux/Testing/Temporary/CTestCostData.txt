@@ -1,0 +1,8 @@
+url_analyzer 1 0.00379184
+email_analyzer 1 0.00276724
+risk_engine 1 0.00243336
+campaign_detector 1 0.00565974
+intel 1 0.0391614
+domain_heuristics 1 0.00234417
+database 1 0.00708796
+---
